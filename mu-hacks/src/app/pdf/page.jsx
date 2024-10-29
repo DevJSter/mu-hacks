@@ -82,51 +82,132 @@ const DocxAnalyzer = () => {
       setGeneratingQuestions(true);
       setError("");
 
-      const response = await fetch("http://localhost:8000/api/questions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: docxText }),
-      });
+      // const response = await fetch("http://localhost:8000/api/questions", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ text: docxText }),
+      // });
 
-      if (!response.ok) {
-        throw new Error(
-          `Server error: ${response.status} ${response.statusText}`
-        );
-      }
+      // if (!response.ok) {
+      //   throw new Error(
+      //     `Server error: ${response.status} ${response.statusText}`
+      //   );
+      // }
 
-      const data = await response.json();
+      // const data = await response.json();
+      // console.log('received data,', data)
+      setTimeout(() => {
 
-
-
-      // Extract just the JSON array part from the response string
-      const jsonString = data.questions.response.substring(
-        data.questions.response.indexOf("["),
-        data.questions.response.lastIndexOf("]") + 1
-      );
-
-      // Parse the JSON array
-      const questions = JSON.parse(jsonString);
-
-      setQuestions(questions);
-
-      // Initialize answers object
-      const initialAnswers = questions.reduce((acc, q) => {
+        const questions = {
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is your primary business model?",
+      "description": "Choose your main revenue generation approach",
+      "options": ["B2B", "B2C", "SaaS", "Marketplace"],
+      "type": "text"
+    },
+    {
+      "id": 2,
+      "question": "How do you plan to acquire new customers?",
+      "description": "Choose your primary customer acquisition strategy",
+      "options": ["Marketing", "Partnerships", "Referrals", "Word-of-Mouth"],
+      "type": "text"
+    },
+    {
+      "id": 3,
+      "question": "What are the key performance indicators for your business?",
+      "description": "Identify the metrics that drive decision-making",
+      "options": ["Revenue Growth", "Customer Retention", "Market Share", "Product Adoption"],
+      "type": "text"
+    },
+    {
+      "id": 4,
+      "question": "How do you stay ahead of competitors in your market?",
+      "description": "Choose your primary competitive strategy",
+      "options": ["Innovation", "Marketing", "Partnerships", "Cost Leadership"],
+      "type": "text"
+    },
+    {
+      "id": 5,
+      "question": "What role does data play in your business decision-making?",
+      "description": "Choose the primary source of data-driven insights",
+      "options": ["Customer Feedback", "Market Research", "Sales Data", "Financial Metrics"],
+      "type": "text"
+    },
+    {
+      "id": 6,
+      "question": "How do you prioritize innovation and R&D?",
+      "description": "Choose your primary approach to driving innovation",
+      "options": ["In-House Development", "Partnerships", "Acquisitions", "Open Innovation"],
+      "type": "text"
+    },
+    {
+      "id": 7,
+      "question": "What is the biggest challenge you face in scaling your business?",
+      "description": "Identify the primary obstacle to growth",
+      "options": ["Talent Acquisition", "Infrastructure", "Marketing", "Regulatory Compliance"],
+      "type": "text"
+    },
+    {
+      "id": 8,
+      "question": "How do you ensure effective communication with your customers?",
+      "description": "Choose the primary channel for customer engagement",
+      "options": ["Social Media", "Email", "Phone", "In-Person"],
+      "type": "text"
+    },
+    {
+      "id": 9,
+      "question": "What is the most critical aspect of your business operations?",
+      "description": "Identify the primary process that drives success",
+      "options": ["Order Fulfillment", "Customer Service", "Supply Chain Management", "Product Development"],
+      "type": "text"
+    },
+    {
+      "id": 10,
+      "question": "How do you measure and optimize your business's profitability?",
+      "description": "Choose the primary metric for evaluating financial performance",
+      "options": ["Gross Margin", "Operating Profit", "Net Income", "Return on Investment"],
+      "type": "text"
+    }
+  ]
+  };
+        const initialAnswers = questions.questions.reduce((acc, q) => {
         acc[q.id] = "";
         return acc;
       }, {});
       setAnswers(initialAnswers);
+setQuestions(questions.questions)
+
+      }, 10000000);
+
+
+
+      // Extract just the JSON array part from the response string
+      // const jsonString = data.questions.response.substring(
+      //   data.questions.response.indexOf("["),
+      //   data.questions.response.lastIndexOf("]") + 1
+      // );
+
+      // // Parse the JSON array
+      // const questions = JSON.parse(jsonString);
+
+      // setQuestions(questions);
+
+      // Initialize answers object
+      
     } catch (err) {
       console.error("Error in generateQuestions:", err);
       setError(err.message);
       setQuestions([]);
       setAnswers({});
-    } finally {
-      setGeneratingQuestions(false);
     }
   };
 
+
+  console.log(questions)
   console.log(answers);
   console.log(questions);
 
